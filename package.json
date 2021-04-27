@@ -1,0 +1,14 @@
+{
+  "name": "pw2-node-api-example",
+  "version": "1.0.0",
+  "description": "Programación Web 2: API Example",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "IUPA",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
