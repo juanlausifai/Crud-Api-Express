@@ -41,9 +41,6 @@ app.get('/api/users/:userId', (req, res) => {
   }
 });
 
-// DB.findIndex((item) => item.id === userId);
-DB.findIndex((item) => item.id === userId);
-
 app.delete('/api/users/:userId', (req, res) => {
   const userId = parseInt(req.params.userId);
   const userIndex = DB.findIndex((item) => item.id === userId);
