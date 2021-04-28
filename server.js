@@ -22,7 +22,7 @@ app.post('/api/users', (req, res) => {
 
   if (DB.some((item) => item.name.toLowerCase().trim() === userName)) {
     res.status(409).json({
-      message: '`name` debe ser único',
+      message: '`name` ya existe',
     });
   } else {
     DB.push(user);
