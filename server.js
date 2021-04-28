@@ -52,11 +52,6 @@ app.delete('/api/users/:userId', (req, res) => {
   }
 });
 
-// @TODO: Implementar actualización de datos del usuario
-// Criterios:
-//   - Valide datos ingresados (`name` debe ser único, no deben faltar datos).
-//   - Valide si el ID existe.
-
 app.listen(PORT, () => {
   console.info(`Escuchando en puerto ${PORT}`);
 });
