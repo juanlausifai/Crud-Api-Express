@@ -1,24 +1,44 @@
-const database = require('../../../database');
+const database = require("../../../database");
+const { body, validationResult } = require("express-validator");
 
-// POST /api/users
+/**
+ * POST /api/users
+ *
+ * name: obligatorio, debe tener por lo menos 3 caracteres
+ * age: obligatorio
+ */
 module.exports = (route) => {
-  route.post('/', (req, res) => {
-    const user = {
-      name: req.body.name,
-      age: req.body.age,
-    };
+  route.post(
+    "/",
+    body("name")
+      .trim()
+      .notEmpty()
+      .withMessage("Campo obligatorio")
+      .isLength({ min: 3 })
+      .withMessage("Debe tener 3 caracteres"),
+    body("age")
+      .notEmpty()
+      .withMessage("Campo obligatorio")
+      .isInt()
+      .withMessage("Debe ser un número entero"),
+    (req, res) => {
+      const errors = validationResult(req);
 
-    const userName = user.name.toLowerCase().trim();
+      if (!errors.isEmpty()) {
+        res.status(400).json({ errors: errors.array() });
+        return;
+      }
 
-    if (
-      database.DB.some((item) => item.name.toLowerCase().trim() === userName)
-    ) {
-      res.status(409).json({
-        message: '`name` ya existe',
-      });
-    } else {
+      const name = req.body.name;
+      const age = req.body.age;
+
+      const user = {
+        name: name.trim(),
+        age: parseInt(age),
+      };
+
       database.add(user);
       res.json(user);
     }
-  });
+  );
 };
