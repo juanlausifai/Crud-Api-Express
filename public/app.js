@@ -21,17 +21,28 @@ function addRow(name, age) {
   contentTable.appendChild(row);
 }
 
-// async function api(endpoint, method, body) {
-
-// }
-
-async function initApp() {
-  const response = await fetch('/api/users', {
-    method: 'GET',
+/**
+ * Llamado a la API.
+ *
+ * @param {'get'|'post'|'delete'|'put'} method
+ * @param {'/users'|'/users/:id'} endpoint
+ * @returns
+ */
+async function api(method, endpoint) {
+  const response = await fetch(`/api${endpoint}`, {
+    method,
   });
 
   const data = await response.json();
 
+  return data;
+}
+
+/**
+ * Inicio de la APP.
+ */
+async function initApp() {
+  const data = await api('get', '/users');
   data.forEach(({ name, age }) => addRow(name, age));
 }
 
