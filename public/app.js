@@ -21,7 +21,26 @@ function addRow(name, age) {
   contentTable.appendChild(row);
 }
 
-function initApp() {
-  addRow('Juan', 130);
-  addRow('Edu', 134);
+// async function api(endpoint, method, body) {
+
+// }
+
+async function initApp() {
+  const response = await fetch('/api/users', {
+    method: 'GET',
+  });
+
+  const data = await response.json();
+
+  data.forEach(({ name, age }) => addRow(name, age));
 }
+
+// function initApp() {
+//   fetch('/api/users', {
+//     method: 'GET',
+//   }).then((response) => {
+//     response.json().then((data) => {
+//       data.forEach(({ name, age }) => addRow(name, age));
+//     });
+//   });
+// }
