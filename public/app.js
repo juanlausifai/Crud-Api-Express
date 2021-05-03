@@ -3,6 +3,10 @@ const contentTable = document.getElementById('contentTable');
 // Referencia al template
 const templateRow = document.getElementById('contentRow').content;
 
+const inputName = document.getElementById('inputName');
+const inputAge = document.getElementById('inputAge');
+const createUserForm = document.getElementById('createUserForm');
+
 /**
  * Agregar Row.
  *
@@ -28,9 +32,17 @@ function addRow(name, age) {
  * @param {'/users'|'/users/:id'} endpoint
  * @returns
  */
-async function api(method, endpoint) {
+async function api(method, endpoint, body = undefined) {
+  if (body) {
+    body = JSON.stringify(body);
+  }
+
   const response = await fetch(`/api${endpoint}`, {
     method,
+    body,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   const data = await response.json();
@@ -39,11 +51,19 @@ async function api(method, endpoint) {
 }
 
 /**
+ * Cargar datos de la tabla.
+ */
+async function loadTable() {
+  contentTable.innerHTML = '';
+  const data = await api('get', '/users');
+  data.forEach(({ name, age }) => addRow(name, age));
+}
+
+/**
  * Inicio de la APP.
  */
 async function initApp() {
-  const data = await api('get', '/users');
-  data.forEach(({ name, age }) => addRow(name, age));
+  await loadTable();
 }
 
 // function initApp() {
@@ -55,3 +75,19 @@ async function initApp() {
 //     });
 //   });
 // }
+
+/**
+ * Crear usuario.
+ */
+async function createUser() {
+  const name = inputName.value;
+  const age = inputAge.value;
+
+  await api('post', '/users', {
+    name,
+    age,
+  });
+
+  createUserForm.reset();
+  loadTable();
+}
