@@ -9,17 +9,12 @@
       crossorigin="anonymous"
     />
   </head>
-  <body>
+  <body onload="initApp()">
     <div class="container">
       <h1>Usuarios IUPA</h1>
       <div class="panel panel-default">
         <div class="panel-heading">Lista Usuarios</div>
-        <div class="panel-body">
-          <div>
-            Nombre: Juan - Edad: 30
-            <button class="btn btn-danger pull-right">Eliminar</button>
-          </div>
-        </div>
+        <div class="panel-body" id="contentTable"></div>
       </div>
       <div class="panel panel-default">
         <div class="panel-heading">Crear Usuario</div>
@@ -40,5 +35,17 @@
         </div>
       </div>
     </div>
+
+    <template id="contentRow">
+      <div class="row">
+        <div class="col-xs-6 txtName">Nombre</div>
+        <div class="col-xs-2 txtAge">Edad</div>
+        <div class="col-xs-4">
+          <button class="btn btn-danger pull-right btnDelete">Eliminar</button>
+        </div>
+      </div>
+    </template>
+
+    <script src="/app.js"></script>
   </body>
 </html>
