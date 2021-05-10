@@ -7,7 +7,7 @@ module.exports = (route) => {
 
     let users = database.DB;
     if (filterName) {
-      users = users.filter((elem) => elem.name.includes(filterName));
+      users = users.filter((elem) => ((elem.name).toLowerCase()).includes(filterName.toLowerCase()));
     }
 
     res.json(users);
